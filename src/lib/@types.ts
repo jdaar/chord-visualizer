@@ -1,7 +1,7 @@
 export type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B';
 export type ChordType = 'dim' | 'maj' | 'min' | 'aug';
 
-export type ChordString = `${Note}${ChordType}${number | ''}`;
+export type ChordString = `${Note}${ChordType}${string | ''}`;
 
 export type Intervals = {
 	[key in ChordType]: Array<number>;

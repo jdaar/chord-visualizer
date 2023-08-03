@@ -18,7 +18,7 @@ export function chord_to_string(chord: Chord): ChordString {
 		const chord_type_intervals = intervals[get_chord_type(chord)];
 		const extension = chord['intervals'].filter(
 			(value) => !chord_type_intervals.includes(value)
-		)[0];
+		).join('/');
 		chord_string = `${chord['base_note']}${get_chord_type(chord)}${extension ?? ''}`;
 	}
 	return chord_string;
