@@ -1,4 +1,4 @@
-import type { ChordType, Intervals, Note } from "./@types"
+import type { ChordType, Intervals, Language, LanguageDictionary, Note } from "./@types"
 
 const dim = [
     3,
@@ -60,4 +60,25 @@ export const anglosaxon_latin_notes: AnglosaxonLatinNotes = {
     G: 'Sol',
     A: 'La',
     B: 'Si'
+}
+
+export const language_dictionaries: {[key in Language]: LanguageDictionary} = {
+    'br': {
+        'no_chord': 'Nenhum acorde foi identificado',
+        'reset_intervals': 'Redefinir intervalos',
+        'add_interval': 'Adicionar intervalo',
+        'add_chord_intervals': 'Adicionar intervalos de acorde'
+    },
+    'en': {
+        'no_chord': 'No chord was identified',
+        'reset_intervals': 'Reset intervals',
+        'add_interval': 'Add interval',
+        'add_chord_intervals': 'Add chord intervals'
+    },
+    'es': {
+        'no_chord': 'No se identifico un acorde',
+        'reset_intervals': 'Reiniciar intervalos',
+        'add_interval': 'Añadir intervalo',
+        'add_chord_intervals': 'Añadir intervalos del acorde'
+    }
 }

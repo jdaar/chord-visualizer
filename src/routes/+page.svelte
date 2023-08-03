@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Chord, ChordType, Note } from "$lib/@types";
+	import type { Chord, ChordType, Language, LanguageDictionary, Note } from "$lib/@types";
 	import { anglo_to_latin, chord_to_string, interval_to_note } from "$lib/chord";
-	import { intervals, notes } from "$lib/const";
+	import { intervals, language_dictionaries, notes } from "$lib/const";
 	import { writable } from "svelte/store";
     import '../styles.css';
 
@@ -11,8 +11,9 @@
         inversion: 0
     })
 
-    type Language = 'br' | 'es' | 'en'
     let language = writable<Language>('es')
+    let language_dictionary: LanguageDictionary = language_dictionaries[$language];
+    $: language_dictionary = language_dictionaries[$language]
 
     function on_change_note(value: Note) {
         $chord = {
@@ -43,6 +44,9 @@
             ...$chord,
             intervals: []
         }
+    }
+    function on_language_change(lang: Language) {
+        $language = lang
     }
 
     type BaseNoteOption = {
@@ -87,8 +91,16 @@
     }
 </script>
 
-<button class="language">
-    🇧🇷
+<button class="language" on:click={() => {
+    on_language_change($language == 'br' ? 'es' : ($language == 'es' ? 'en' : 'br'))
+}}>
+    {
+        $language == 'br' ? '🇧🇷' :
+            ($language == 'es' ? '🇪🇸' :
+                $language == 'en' ? '🇺🇸'
+                : 'none'
+            )
+    }
 </button>
 <div class="display">
     <div class="form">
@@ -114,16 +126,16 @@
             {/each}
         </select>
 
-        <button on:click={() => {on_reset_intervals()}}>Reset intervals</button>
-        <button on:click={() => {on_add_interval(selected_interval)}}>Add interval</button>
+        <button on:click={() => {on_reset_intervals()}}>{language_dictionary['reset_intervals']}</button>
+        <button on:click={() => {on_add_interval(selected_interval)}}>{language_dictionary['add_interval']}</button>
         <button on:click={() => {
             on_reset_intervals()
             for (let i = 0; i < selected_chord_type.length; i += 1) {
                 on_add_interval(selected_chord_type[i])
             }
-        }}>Add chord type intervals</button>
+        }}>{language_dictionary['add_chord_intervals']}</button>
     </div>
-    <h1>{chord_to_string($chord).includes('undefined') ? 'No se ha detectado un acorde' : chord_to_string($chord)}</h1>
+    <h1>{chord_to_string($chord).includes('undefined') ? language_dictionary['no_chord'] : chord_to_string($chord)}</h1>
     <div class="piano">
         {#each notes as note}
                 <div class="note" 

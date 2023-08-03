@@ -12,3 +12,11 @@ export type Chord = {
     intervals: Array<number>
     inversion: number
 }
+
+export type Language = 'br' | 'es' | 'en'
+export type LanguageDictionary = {
+    no_chord: string
+    reset_intervals: string
+    add_interval: string
+    add_chord_intervals: string
+}
