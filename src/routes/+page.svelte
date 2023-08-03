@@ -1,0 +1,195 @@
+<script lang="ts">
+	import type { Chord, ChordType, Note } from "$lib/@types";
+	import { anglo_to_latin, chord_to_string, interval_to_note } from "$lib/chord";
+	import { intervals, notes } from "$lib/const";
+	import { writable } from "svelte/store";
+    import '../styles.css';
+
+    let chord = writable<Chord>({
+        base_note: 'A',
+        intervals: [],
+        inversion: 0
+    })
+
+    type Language = 'br' | 'es' | 'en'
+    let language = writable<Language>('es')
+
+    function on_change_note(value: Note) {
+        $chord = {
+            ...$chord,
+            base_note: value
+        }
+    }
+    function on_add_interval(value: number) {
+        if (!$chord['intervals'].includes(value)) {
+            $chord = {
+                ...$chord,
+                intervals: [
+                    ...$chord['intervals'],
+                    value
+                ]
+            }
+            $chord['intervals'].sort((a, b) => a - b)
+        }
+    }
+    function on_remove_interval(value: number) {
+        $chord = {
+            ...$chord,
+            intervals: $chord['intervals'].filter(interval => !(interval == value))
+        }
+    }
+    function on_reset_intervals() {
+        $chord = {
+            ...$chord,
+            intervals: []
+        }
+    }
+
+    type BaseNoteOption = {
+        value: Note,
+        label: string
+    };
+    let base_note_options: Array<BaseNoteOption> = notes.map(value => ({
+        value: value,
+        label: anglo_to_latin(value)
+    }))
+    let selected_base_note: Note;
+
+    type IntervalOption = {
+        value: number,
+        label: string
+    };
+    let interval_options: Array<IntervalOption> = []
+    let selected_interval: number;
+
+
+    type ChordTypeOption = {
+        value: Array<number>,
+        label: string
+    };
+    let chord_type_options: Array<ChordTypeOption> = Object.keys(intervals).map((value) => ({
+        value: intervals[value as ChordType],
+        label: value
+    }))
+    let selected_chord_type: Array<number>;
+
+    $: {
+        if (selected_base_note !== undefined) {
+            on_change_note(selected_base_note)
+            interval_options = new Array(12).fill(1).reduce((acc, _, idx) => ([
+                ...acc,
+                {
+                    value: idx,
+                    label: anglo_to_latin(interval_to_note(selected_base_note, idx))
+                }
+            ]), [])
+        }
+    }
+</script>
+
+<button class="language">
+    🇧🇷
+</button>
+<div class="display">
+    <div class="form">
+        <select name="base_note" id="base_note" bind:value={selected_base_note}>
+            {#each base_note_options as base_note_option}
+                <option value={base_note_option['value']}>
+                    {base_note_option['label']}
+                </option>
+            {/each}
+        </select>
+        <select name="interval" id="interval" bind:value={selected_interval}>
+            {#each interval_options as interval_option}
+                <option value={interval_option['value']}>
+                    {interval_option['label']} - {interval_option['value']}
+                </option>
+            {/each}
+        </select>
+        <select name="chord_type" id="chord_type" bind:value={selected_chord_type}>
+            {#each chord_type_options as chord_type_option}
+                <option value={chord_type_option['value']}>
+                    {chord_type_option['label']}
+                </option>
+            {/each}
+        </select>
+
+        <button on:click={() => {on_reset_intervals()}}>Reset intervals</button>
+        <button on:click={() => {on_add_interval(selected_interval)}}>Add interval</button>
+        <button on:click={() => {
+            on_reset_intervals()
+            for (let i = 0; i < selected_chord_type.length; i += 1) {
+                on_add_interval(selected_chord_type[i])
+            }
+        }}>Add chord type intervals</button>
+    </div>
+    <h1>{chord_to_string($chord).includes('undefined') ? 'No se ha detectado un acorde' : chord_to_string($chord)}</h1>
+    <div class="piano">
+        {#each notes as note}
+                <div class="note" 
+                    class:selected={$chord['intervals'].map(value => interval_to_note($chord['base_note'], value)).includes(note) || note == $chord['base_note']}
+                    class:semitone={(note[1] ?? '') == '#'}
+                ></div>
+        {/each}
+    </div>
+</div>
+
+<style>
+    * {
+        color: #e8eddf;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    select {
+        background-color: #242423;
+        border: none;
+        padding: 1em;
+        font-size: medium;
+    }
+
+    button {
+        border: none;
+        padding: 1em;
+        font-size: medium;
+        background-color: #333533;
+    }
+    
+    .display {
+        display: grid;
+        grid-template-rows: 20% 20% 60%;
+        grid-template-columns: 80%;
+        justify-content: center;
+        align-content: center;
+        padding: 1em;
+        margin-top: 3em;
+    }
+
+    .note {
+        background-color: #e8eddf;
+        padding: 1em;
+        height: 5rem;
+        border-radius: 0.5em;
+    }
+
+    .selected {
+        background-color: #f5cb5c !important;
+    }
+
+    .semitone {
+        background-color: #333533;
+        color: white
+    }
+
+    .piano {
+        background-color: #242423;
+        border-radius: 0.5em;
+        padding: 1em;
+        display: grid;
+        gap: 1em;
+        grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr 1fr;
+        grid-template-rows: 1fr;
+    }
+</style>
