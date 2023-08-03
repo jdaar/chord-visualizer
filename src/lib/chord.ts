@@ -2,7 +2,7 @@ import type { Chord, ChordString, ChordType, Note } from './@types';
 import { anglosaxon_latin_notes, chord_types, intervals, notes } from './const';
 
 export function get_chord_type(chord: Chord): ChordType {
-	const chord_intervals = chord['intervals'].slice(0, 2);
+	const chord_intervals = chord['intervals'];
 	const chord_type = chord_types.filter((type) =>
 		intervals[type].every((note_interval) => chord_intervals.includes(note_interval))
 	);
@@ -15,7 +15,8 @@ export function chord_to_string(chord: Chord): ChordString {
 	if (is_triad) {
 		chord_string = `${chord['base_note']}${get_chord_type(chord)}`;
 	} else {
-		const extension = chord['intervals'][chord['intervals'].length - 1];
+        const chord_type_intervals = intervals[get_chord_type(chord)]
+		const extension = chord['intervals'].filter(value => !chord_type_intervals.includes(value))[0];
 		chord_string = `${chord['base_note']}${get_chord_type(chord)}${extension ?? ''}`;
 	}
 	return chord_string;

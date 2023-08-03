@@ -22,7 +22,7 @@
 		};
 	}
 	function on_add_interval(value: number) {
-		if (!$chord['intervals'].includes(value)) {
+		if (!$chord['intervals'].includes(value) && value != 0) {
 			$chord = {
 				...$chord,
 				intervals: [...$chord['intervals'], value]
@@ -70,11 +70,11 @@
 	$: {
 		if (selected_base_note !== undefined) {
 			on_change_note(selected_base_note);
-			interval_options = new Array(12).fill(1).reduce(
+			interval_options = new Array(11).fill(1).reduce(
 				(acc, _, idx) => [
 					...acc,
 					{
-						value: idx,
+						value: idx + 1,
 						label: anglo_to_latin(interval_to_note(selected_base_note, idx))
 					}
 				],
