@@ -1,4 +1,4 @@
-import type { Chord, ChordString, ChordType, Note } from './@types';
+import type { Chord, ChordString, ChordType, Note, ScaleType } from './@types';
 import { anglosaxon_latin_notes, chord_types, intervals, notes } from './const';
 
 export function get_chord_type(chord: Chord): ChordType {
@@ -18,7 +18,7 @@ export function chord_to_string(chord: Chord): ChordString {
 		const chord_type_intervals = intervals[get_chord_type(chord)];
 		const extension = chord['intervals'].filter(
 			(value) => !chord_type_intervals.includes(value)
-		).join('/');
+		)[0];
 		chord_string = `${chord['base_note']}${get_chord_type(chord)}${extension ?? ''}`;
 	}
 	return chord_string;
@@ -34,4 +34,8 @@ export function interval_to_note(base_note: Note, interval: number): Note {
 
 export function anglo_to_latin(note: Note) {
 	return `${anglosaxon_latin_notes[note[0]]}${note[1] ?? ''}`;
+}
+
+export function generate_scale(scale_type: ScaleType, note: Note) {
+    // TODO
 }

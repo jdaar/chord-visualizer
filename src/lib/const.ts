@@ -40,7 +40,9 @@ export const language_dictionaries: { [key in Language]: LanguageDictionary } = 
 		add_chord_intervals: 'Adicionar intervalos de acorde',
 		chord_type_label: 'Tipo de acorde',
 		interval_label: 'Intervalo',
-		base_note_label: 'Nota de base'
+		base_note_label: 'Nota de base',
+        latin_label: 'Mudar para a notação latina',
+        anglo_label: 'Mudar para a notação anglo-saxônica'
 	},
 	en: {
 		no_chord: 'No chord was identified',
@@ -49,7 +51,9 @@ export const language_dictionaries: { [key in Language]: LanguageDictionary } = 
 		add_chord_intervals: 'Add chord intervals',
 		chord_type_label: 'Chord type',
 		interval_label: 'Interval',
-		base_note_label: 'Base note'
+		base_note_label: 'Base note',
+        latin_label: 'Change to latin notation',
+        anglo_label: 'Change to anglo-saxon notation'
 	},
 	es: {
 		no_chord: 'No se identifico un acorde',
@@ -58,6 +62,8 @@ export const language_dictionaries: { [key in Language]: LanguageDictionary } = 
 		add_chord_intervals: 'Añadir intervalos del acorde',
 		chord_type_label: 'Tipo de acorde',
 		interval_label: 'Intervalo',
-		base_note_label: 'Nota base'
+		base_note_label: 'Nota base',
+        latin_label: 'Cambiar a notacion latina',
+        anglo_label: 'Cambiar a notacion anglosajona'
 	}
 };
