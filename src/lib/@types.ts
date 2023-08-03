@@ -19,4 +19,7 @@ export type LanguageDictionary = {
 	reset_intervals: string;
 	add_interval: string;
 	add_chord_intervals: string;
+    chord_type_label: string;
+    interval_label: string
+    base_note_label: string
 };

@@ -37,18 +37,27 @@ export const language_dictionaries: { [key in Language]: LanguageDictionary } = 
 		no_chord: 'Nenhum acorde foi identificado',
 		reset_intervals: 'Redefinir intervalos',
 		add_interval: 'Adicionar intervalo',
-		add_chord_intervals: 'Adicionar intervalos de acorde'
+		add_chord_intervals: 'Adicionar intervalos de acorde',
+        chord_type_label: 'Tipo de acorde',
+        interval_label: 'Intervalo',
+        base_note_label: 'Nota de base',
 	},
 	en: {
 		no_chord: 'No chord was identified',
 		reset_intervals: 'Reset intervals',
 		add_interval: 'Add interval',
-		add_chord_intervals: 'Add chord intervals'
+		add_chord_intervals: 'Add chord intervals',
+        chord_type_label: 'Chord type',
+        interval_label: 'Interval',
+        base_note_label: 'Base note',
 	},
 	es: {
 		no_chord: 'No se identifico un acorde',
 		reset_intervals: 'Restablecer intervalos',
 		add_interval: 'Añadir intervalo',
-		add_chord_intervals: 'Añadir intervalos del acorde'
+		add_chord_intervals: 'Añadir intervalos del acorde',
+        chord_type_label: 'Tipo de acorde',
+        interval_label: 'Intervalo',
+        base_note_label: 'Nota base',
 	}
 };

@@ -94,46 +94,63 @@
 </button>
 <div class="display">
 	<div class="form">
-		<select name="base_note" id="base_note" bind:value={selected_base_note}>
-			{#each base_note_options as base_note_option}
-				<option value={base_note_option['value']}>
-					{base_note_option['label']}
-				</option>
-			{/each}
-		</select>
-		<select name="interval" id="interval" bind:value={selected_interval}>
-			{#each interval_options as interval_option}
-				<option value={interval_option['value']}>
-					{interval_option['label']} - {interval_option['value']}
-				</option>
-			{/each}
-		</select>
-		<select name="chord_type" id="chord_type" bind:value={selected_chord_type}>
-			{#each chord_type_options as chord_type_option}
-				<option value={chord_type_option['value']}>
-					{chord_type_option['label']}
-				</option>
-			{/each}
-		</select>
+        <div class="field">
+            <label for="base_note">
+                {language_dictionary['base_note_label']}
+            </label>
+            <select name="base_note" id="base_note" bind:value={selected_base_note}>
+                {#each base_note_options as base_note_option}
+                    <option value={base_note_option['value']}>
+                        {base_note_option['label']}
+                    </option>
+                {/each}
+            </select>
+            <button
+                on:click={() => {
+                    on_reset_intervals();
+                }}>{language_dictionary['reset_intervals']}</button
+            >
+        </div>
 
-		<button
-			on:click={() => {
-				on_reset_intervals();
-			}}>{language_dictionary['reset_intervals']}</button
-		>
-		<button
-			on:click={() => {
-				on_add_interval(selected_interval);
-			}}>{language_dictionary['add_interval']}</button
-		>
-		<button
-			on:click={() => {
-				on_reset_intervals();
-				for (let i = 0; i < selected_chord_type.length; i += 1) {
-					on_add_interval(selected_chord_type[i]);
-				}
-			}}>{language_dictionary['add_chord_intervals']}</button
-		>
+        <div class="field">
+            <label for="interval">
+                {language_dictionary['interval_label']}
+            </label>
+            <select name="interval" id="interval" bind:value={selected_interval}>
+                {#each interval_options as interval_option}
+                    <option value={interval_option['value']}>
+                        {interval_option['label']} - {interval_option['value']}
+                    </option>
+                {/each}
+            </select>
+            <button
+                on:click={() => {
+                    on_add_interval(selected_interval);
+                }}>{language_dictionary['add_interval']}</button
+            >
+        </div>
+
+        <div class="field">
+            <label for="chord_type">
+                {language_dictionary['chord_type_label']}
+            </label>
+            <select name="chord_type" id="chord_type" bind:value={selected_chord_type}>
+                {#each chord_type_options as chord_type_option}
+                    <option value={chord_type_option['value']}>
+                        {chord_type_option['label']}
+                    </option>
+                {/each}
+            </select>
+            <button
+                on:click={() => {
+                    on_reset_intervals();
+                    for (let i = 0; i < selected_chord_type.length; i += 1) {
+                        on_add_interval(selected_chord_type[i]);
+                    }
+                }}>{language_dictionary['add_chord_intervals']}</button
+            >
+        </div>
+
 	</div>
 	<h1>
 		{chord_to_string($chord).includes('undefined')
@@ -167,6 +184,7 @@
 		border: none;
 		padding: 1em;
 		font-size: medium;
+        border-radius: 0.5em;
 	}
 
 	button {
@@ -174,7 +192,24 @@
 		padding: 1em;
 		font-size: medium;
 		background-color: #333533;
+        border-radius: 0.5em;
 	}
+
+    .form {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 1em;
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    .field {
+        display: grid;
+        gap: 1em;
+    }
 
 	.display {
 		display: grid;
@@ -210,5 +245,26 @@
 		gap: 1em;
 		grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr 1fr;
 		grid-template-rows: 1fr;
+        margin-bottom: 2em;
 	}
+
+    @media(max-width: 860px) {
+        .display {
+            grid-template-columns: 100%;
+        }
+        
+        .piano {
+            gap: 0.5em;
+            grid-template-columns: 1fr 0.5fr 1fr 0.5fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr;
+        }
+
+        .note {
+            padding: 0.1em;
+        }
+
+        .form {
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
