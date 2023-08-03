@@ -75,7 +75,7 @@
 					...acc,
 					{
 						value: idx + 1,
-						label: anglo_to_latin(interval_to_note(selected_base_note, idx))
+						label: anglo_to_latin(interval_to_note(selected_base_note, idx + 1))
 					}
 				],
 				[]
