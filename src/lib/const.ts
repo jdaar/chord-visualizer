@@ -47,7 +47,7 @@ export const language_dictionaries: { [key in Language]: LanguageDictionary } = 
 	},
 	es: {
 		no_chord: 'No se identifico un acorde',
-		reset_intervals: 'Reiniciar intervalos',
+		reset_intervals: 'Restablecer intervalos',
 		add_interval: 'Añadir intervalo',
 		add_chord_intervals: 'Añadir intervalos del acorde'
 	}
