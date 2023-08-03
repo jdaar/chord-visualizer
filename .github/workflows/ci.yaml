@@ -32,4 +32,6 @@ jobs:
     needs: build
 
     steps:
-      - run: echo test
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
