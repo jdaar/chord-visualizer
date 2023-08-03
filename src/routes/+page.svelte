@@ -159,13 +159,19 @@
 	</h1>
 	<div class="piano">
 		{#each notes as note}
-			<div
-				class="note"
-				class:selected={$chord['intervals']
-					.map((value) => interval_to_note($chord['base_note'], value))
-					.includes(note) || note == $chord['base_note']}
-				class:semitone={(note[1] ?? '') == '#'}
-			/>
+            <div class="note_container">
+                <div
+                    class="note"
+                    class:selected={$chord['intervals']
+                        .map((value) => interval_to_note($chord['base_note'], value))
+                        .includes(note) || note == $chord['base_note']}
+                    class:semitone={(note[1] ?? '') == '#'}
+                >
+                </div>
+                <h2>
+                    {anglo_to_latin(note)}
+                </h2>
+            </div>
 		{/each}
 	</div>
 </div>
@@ -195,6 +201,19 @@
         border-radius: 0.5em;
 	}
 
+    .note_container {
+        width: 100%;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
     .form {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -222,10 +241,13 @@
 	}
 
 	.note {
+		color: #333533;
 		background-color: #e8eddf;
-		padding: 1em;
 		height: 5rem;
 		border-radius: 0.5em;
+        display: grid;
+        justify-content: center;
+        align-content: center;
 	}
 
 	.selected {
@@ -234,7 +256,7 @@
 
 	.semitone {
 		background-color: #333533;
-		color: white;
+		color: #e8eddf;
 	}
 
 	.piano {
@@ -243,10 +265,11 @@
 		padding: 1em;
 		display: grid;
 		gap: 1em;
-		grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr 1fr;
+		grid-template-columns: 1fr 0.3fr 1fr 0.3fr 1fr 1fr 0.3fr 1fr 0.3fr 1fr 0.3fr 1fr;
 		grid-template-rows: 1fr;
         margin-bottom: 2em;
 	}
+
 
     @media(max-width: 860px) {
         .display {
@@ -264,6 +287,12 @@
 
         .form {
             grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr;
+        }
+    }
+    @media(max-width: 640px) {
+        .piano {
+            grid-template-rows: 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr;
             grid-template-columns: 1fr;
         }
     }
