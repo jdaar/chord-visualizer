@@ -94,63 +94,62 @@
 </button>
 <div class="display">
 	<div class="form">
-        <div class="field">
-            <label for="base_note">
-                {language_dictionary['base_note_label']}
-            </label>
-            <select name="base_note" id="base_note" bind:value={selected_base_note}>
-                {#each base_note_options as base_note_option}
-                    <option value={base_note_option['value']}>
-                        {base_note_option['label']}
-                    </option>
-                {/each}
-            </select>
-            <button
-                on:click={() => {
-                    on_reset_intervals();
-                }}>{language_dictionary['reset_intervals']}</button
-            >
-        </div>
+		<div class="field">
+			<label for="base_note">
+				{language_dictionary['base_note_label']}
+			</label>
+			<select name="base_note" id="base_note" bind:value={selected_base_note}>
+				{#each base_note_options as base_note_option}
+					<option value={base_note_option['value']}>
+						{base_note_option['label']}
+					</option>
+				{/each}
+			</select>
+			<button
+				on:click={() => {
+					on_reset_intervals();
+				}}>{language_dictionary['reset_intervals']}</button
+			>
+		</div>
 
-        <div class="field">
-            <label for="interval">
-                {language_dictionary['interval_label']}
-            </label>
-            <select name="interval" id="interval" bind:value={selected_interval}>
-                {#each interval_options as interval_option}
-                    <option value={interval_option['value']}>
-                        {interval_option['label']} - {interval_option['value']}
-                    </option>
-                {/each}
-            </select>
-            <button
-                on:click={() => {
-                    on_add_interval(selected_interval);
-                }}>{language_dictionary['add_interval']}</button
-            >
-        </div>
+		<div class="field">
+			<label for="interval">
+				{language_dictionary['interval_label']}
+			</label>
+			<select name="interval" id="interval" bind:value={selected_interval}>
+				{#each interval_options as interval_option}
+					<option value={interval_option['value']}>
+						{interval_option['label']} - {interval_option['value']}
+					</option>
+				{/each}
+			</select>
+			<button
+				on:click={() => {
+					on_add_interval(selected_interval);
+				}}>{language_dictionary['add_interval']}</button
+			>
+		</div>
 
-        <div class="field">
-            <label for="chord_type">
-                {language_dictionary['chord_type_label']}
-            </label>
-            <select name="chord_type" id="chord_type" bind:value={selected_chord_type}>
-                {#each chord_type_options as chord_type_option}
-                    <option value={chord_type_option['value']}>
-                        {chord_type_option['label']}
-                    </option>
-                {/each}
-            </select>
-            <button
-                on:click={() => {
-                    on_reset_intervals();
-                    for (let i = 0; i < selected_chord_type.length; i += 1) {
-                        on_add_interval(selected_chord_type[i]);
-                    }
-                }}>{language_dictionary['add_chord_intervals']}</button
-            >
-        </div>
-
+		<div class="field">
+			<label for="chord_type">
+				{language_dictionary['chord_type_label']}
+			</label>
+			<select name="chord_type" id="chord_type" bind:value={selected_chord_type}>
+				{#each chord_type_options as chord_type_option}
+					<option value={chord_type_option['value']}>
+						{chord_type_option['label']}
+					</option>
+				{/each}
+			</select>
+			<button
+				on:click={() => {
+					on_reset_intervals();
+					for (let i = 0; i < selected_chord_type.length; i += 1) {
+						on_add_interval(selected_chord_type[i]);
+					}
+				}}>{language_dictionary['add_chord_intervals']}</button
+			>
+		</div>
 	</div>
 	<h1>
 		{chord_to_string($chord).includes('undefined')
@@ -159,19 +158,18 @@
 	</h1>
 	<div class="piano">
 		{#each notes as note}
-            <div class="note_container">
-                <div
-                    class="note"
-                    class:selected={$chord['intervals']
-                        .map((value) => interval_to_note($chord['base_note'], value))
-                        .includes(note) || note == $chord['base_note']}
-                    class:semitone={(note[1] ?? '') == '#'}
-                >
-                </div>
-                <h2>
-                    {anglo_to_latin(note)}
-                </h2>
-            </div>
+			<div class="note_container">
+				<div
+					class="note"
+					class:selected={$chord['intervals']
+						.map((value) => interval_to_note($chord['base_note'], value))
+						.includes(note) || note == $chord['base_note']}
+					class:semitone={(note[1] ?? '') == '#'}
+				/>
+				<h2>
+					{anglo_to_latin(note)}
+				</h2>
+			</div>
 		{/each}
 	</div>
 </div>
@@ -190,7 +188,7 @@
 		border: none;
 		padding: 1em;
 		font-size: medium;
-        border-radius: 0.5em;
+		border-radius: 0.5em;
 	}
 
 	button {
@@ -198,37 +196,37 @@
 		padding: 1em;
 		font-size: medium;
 		background-color: #333533;
-        border-radius: 0.5em;
+		border-radius: 0.5em;
 	}
 
-    .note_container {
-        width: 100%;
-        display: grid;
-        justify-content: center;
-        align-content: center;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: 1fr;
-    }
+	.note_container {
+		width: 100%;
+		display: grid;
+		justify-content: center;
+		align-content: center;
+		grid-template-rows: 1fr 1fr;
+		grid-template-columns: 1fr;
+	}
 
-    h2 {
-        text-align: center;
-    }
+	h2 {
+		text-align: center;
+	}
 
-    .form {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr;
-        gap: 1em;
-    }
+	.form {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr;
+		gap: 1em;
+	}
 
-    label {
-        font-weight: 600;
-    }
+	label {
+		font-weight: 600;
+	}
 
-    .field {
-        display: grid;
-        gap: 1em;
-    }
+	.field {
+		display: grid;
+		gap: 1em;
+	}
 
 	.display {
 		display: grid;
@@ -245,9 +243,9 @@
 		background-color: #e8eddf;
 		height: 5rem;
 		border-radius: 0.5em;
-        display: grid;
-        justify-content: center;
-        align-content: center;
+		display: grid;
+		justify-content: center;
+		align-content: center;
 	}
 
 	.selected {
@@ -267,33 +265,32 @@
 		gap: 1em;
 		grid-template-columns: 1fr 0.3fr 1fr 0.3fr 1fr 1fr 0.3fr 1fr 0.3fr 1fr 0.3fr 1fr;
 		grid-template-rows: 1fr;
-        margin-bottom: 2em;
+		margin-bottom: 2em;
 	}
 
+	@media (max-width: 860px) {
+		.display {
+			grid-template-columns: 100%;
+		}
 
-    @media(max-width: 860px) {
-        .display {
-            grid-template-columns: 100%;
-        }
-        
-        .piano {
-            gap: 0.5em;
-            grid-template-columns: 1fr 0.5fr 1fr 0.5fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr;
-        }
+		.piano {
+			gap: 0.5em;
+			grid-template-columns: 1fr 0.5fr 1fr 0.5fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr;
+		}
 
-        .note {
-            padding: 0.1em;
-        }
+		.note {
+			padding: 0.1em;
+		}
 
-        .form {
-            grid-template-rows: 1fr 1fr 1fr;
-            grid-template-columns: 1fr;
-        }
-    }
-    @media(max-width: 640px) {
-        .piano {
-            grid-template-rows: 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr;
-            grid-template-columns: 1fr;
-        }
-    }
+		.form {
+			grid-template-rows: 1fr 1fr 1fr;
+			grid-template-columns: 1fr;
+		}
+	}
+	@media (max-width: 640px) {
+		.piano {
+			grid-template-rows: 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr 0.2fr 0.5fr;
+			grid-template-columns: 1fr;
+		}
+	}
 </style>
