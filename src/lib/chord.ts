@@ -15,8 +15,10 @@ export function chord_to_string(chord: Chord): ChordString {
 	if (is_triad) {
 		chord_string = `${chord['base_note']}${get_chord_type(chord)}`;
 	} else {
-        const chord_type_intervals = intervals[get_chord_type(chord)]
-		const extension = chord['intervals'].filter(value => !chord_type_intervals.includes(value))[0];
+		const chord_type_intervals = intervals[get_chord_type(chord)];
+		const extension = chord['intervals'].filter(
+			(value) => !chord_type_intervals.includes(value)
+		)[0];
 		chord_string = `${chord['base_note']}${get_chord_type(chord)}${extension ?? ''}`;
 	}
 	return chord_string;
