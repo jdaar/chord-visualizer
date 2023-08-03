@@ -21,11 +21,11 @@
 	let anglo_to_latin: typeof _anglo_to_latin = (note) => note;
 	$: {
 		if ($notation == 'an') {
-			anglo_to_latin = _anglo_to_latin;
-		} else {
 			anglo_to_latin = (note) => {
 				return note;
 			};
+		} else {
+			anglo_to_latin = _anglo_to_latin;
 		}
 	}
 
