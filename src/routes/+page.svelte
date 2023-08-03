@@ -15,19 +15,19 @@
 	let language_dictionary: LanguageDictionary = language_dictionaries[$language];
 	$: language_dictionary = language_dictionaries[$language];
 
-    type Notation = 'la' | 'an'
-    let notation = writable<Notation>('la')
+	type Notation = 'la' | 'an';
+	let notation = writable<Notation>('la');
 
-    let anglo_to_latin: typeof _anglo_to_latin = (note) => note;
-    $: {
-        if ($notation == 'an') {
-            anglo_to_latin = _anglo_to_latin
-        } else {
-            anglo_to_latin = (note) => {
-                return note
-            }
-        }
-    }
+	let anglo_to_latin: typeof _anglo_to_latin = (note) => note;
+	$: {
+		if ($notation == 'an') {
+			anglo_to_latin = _anglo_to_latin;
+		} else {
+			anglo_to_latin = (note) => {
+				return note;
+			};
+		}
+	}
 
 	function on_change_note(value: Note) {
 		$chord = {
@@ -61,13 +61,18 @@
 		value: Note;
 		label: string;
 	};
-    let base_note_options: Array<BaseNoteOption> = []
-    $: {
-        base_note_options = notes.map((value, idx) => ({
-            value: value,
-            label: value[1] == undefined ? anglo_to_latin(value) : `${anglo_to_latin(value)}/${anglo_to_latin(notes[idx + 1 >= notes.length ? idx : idx + 1])}♭`
-        }));
-    }
+	let base_note_options: Array<BaseNoteOption> = [];
+	$: {
+		base_note_options = notes.map((value, idx) => ({
+			value: value,
+			label:
+				value[1] == undefined
+					? anglo_to_latin(value)
+					: `${anglo_to_latin(value)}/${anglo_to_latin(
+							notes[idx + 1 >= notes.length ? idx : idx + 1]
+					  )}♭`
+		}));
+	}
 	let selected_base_note: Note;
 
 	type IntervalOption = {
@@ -103,21 +108,20 @@
 		}
 	}
 
-    let stringified_chord = language_dictionary['no_chord']
-    $: {
-        const is_valid_chord = !chord_to_string($chord).includes('undefined') 
-        let temp_chord_str: string;
-        if (is_valid_chord) {
-            temp_chord_str = chord_to_string($chord)
-            temp_chord_str = temp_chord_str.includes('#') ? 
-                `${anglo_to_latin(temp_chord_str.slice(0, 2) as Note)}${temp_chord_str.slice(2)}`
-                : 
-                `${anglo_to_latin(temp_chord_str.slice(0, 1) as Note)}${temp_chord_str.slice(1)}`;
-        } else {
-            temp_chord_str = language_dictionary['no_chord']
-        }
-        stringified_chord = temp_chord_str
-    }
+	let stringified_chord = language_dictionary['no_chord'];
+	$: {
+		const is_valid_chord = !chord_to_string($chord).includes('undefined');
+		let temp_chord_str: string;
+		if (is_valid_chord) {
+			temp_chord_str = chord_to_string($chord);
+			temp_chord_str = temp_chord_str.includes('#')
+				? `${anglo_to_latin(temp_chord_str.slice(0, 2) as Note)}${temp_chord_str.slice(2)}`
+				: `${anglo_to_latin(temp_chord_str.slice(0, 1) as Note)}${temp_chord_str.slice(1)}`;
+		} else {
+			temp_chord_str = language_dictionary['no_chord'];
+		}
+		stringified_chord = temp_chord_str;
+	}
 </script>
 
 <button
@@ -131,10 +135,10 @@
 <button
 	class="notation"
 	on:click={() => {
-		on_notation_change($notation == 'an' ? 'la' : 'an')
+		on_notation_change($notation == 'an' ? 'la' : 'an');
 	}}
 >
-    { $notation == 'an' ? language_dictionary['latin_label'] : language_dictionary['anglo_label'] }
+	{$notation == 'an' ? language_dictionary['latin_label'] : language_dictionary['anglo_label']}
 </button>
 <div class="display">
 	<div class="form">
@@ -196,7 +200,7 @@
 		</div>
 	</div>
 	<h1>
-        { stringified_chord }
+		{stringified_chord}
 	</h1>
 	<div class="piano">
 		{#each notes as note}

@@ -37,5 +37,5 @@ export function anglo_to_latin(note: Note) {
 }
 
 export function generate_scale(scale_type: ScaleType, note: Note) {
-    // TODO
+	// TODO
 }

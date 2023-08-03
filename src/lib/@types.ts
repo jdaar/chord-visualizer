@@ -2,7 +2,6 @@ export type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A'
 export type ChordType = 'dim' | 'maj' | 'min' | 'aug';
 export type ScaleType = 'dim' | 'maj' | 'min' | 'aug';
 
-
 export type ChordString = `${Note}${ChordType}${string | ''}`;
 
 export type Intervals = {
@@ -24,6 +23,6 @@ export type LanguageDictionary = {
 	chord_type_label: string;
 	interval_label: string;
 	base_note_label: string;
-    latin_label: string;
-    anglo_label: string;
+	latin_label: string;
+	anglo_label: string;
 };
