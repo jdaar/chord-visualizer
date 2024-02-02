@@ -13,7 +13,7 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		paths: {
 			base: '',
-			assets: 'https://chord.jhonatan.tech'
+			assets: 'https://chords.jhonatan.tech'
 		},
 		adapter: adapter({
 			pages: 'build',
